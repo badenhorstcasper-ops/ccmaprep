@@ -9,14 +9,11 @@ const PAYFAST = {
   sandboxReceiver: '10000100',      // PayFast's public sandbox test merchant
   // The page's public address once hosted. Return/cancel pages are anchors on it.
   siteUrl: 'https://ccmaprep.inreco.co.za/',
-  notifyUrl: ''                     // leave empty: no server yet. PayFast still emails you each payment.
+  notifyUrl: window.INRECO.LOCK.notifyUrl   // payment server (Cloudflare Worker) that confirms each payment
 };
-// Optional: a PayFast dashboard payment link per package. If set, the button opens it instead of the form.
-const PAYFAST_LINKS = {
-  basic: 'PASTE_PAYFAST_LINK_R1200',
-  response: 'PASTE_PAYFAST_LINK_R2500',
-  relief: 'PASTE_PAYFAST_LINK_R4500'
-};
+// Shared payment-lock helpers (checkout.js). PayFast dashboard links are no longer used: they cannot
+// carry the order reference, so the payment server could not confirm them.
+const { LOCK, payReturnLock, waitForPayment } = window.INRECO;
 const CONTACT = {
   whatsapp: '27844027029',          // wa.me format, no + or spaces
   whatsappDisplay: '084 402 7029',
@@ -27,9 +24,9 @@ const WA_MAX_CHARS = 3500;          // keep wa.me links a safe length
 /* ======================================================== */
 
 const PACKAGES = {
-  basic:    { name: 'Inspection Readiness Pack', price: 1200, payName: 'iNRECO Inspection Readiness Pack' },
-  response: { name: 'Inspection Response', price: 2500, payName: 'iNRECO Inspection Response Package' },
-  relief:   { name: 'Full Relief Package', price: 4500, payName: 'iNRECO Full Relief Package' }
+  basic:    { name: 'Inspection Readiness Pack', price: 1200, payName: 'iNRECO Inspection Readiness Pack', code: 'b' },
+  response: { name: 'Inspection Response', price: 2500, payName: 'iNRECO Inspection Response Package', code: 'r' },
+  relief:   { name: 'Full Relief Package', price: 4500, payName: 'iNRECO Full Relief Package', code: 'f' }
 };
 
 const DOCS = [
@@ -76,9 +73,9 @@ const QUESTIONS = {
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const rand = n => 'R' + Math.round(n).toLocaleString('en-ZA').replace(/\u00a0|\s/g, ',');
-const isSet = url => url && !/^PASTE_/.test(url);
 const form = $('#packForm');
 // One reference per visit; goes on the PayFast payment and in the WhatsApp/email answers so you can match them.
+const STORE_KEY = 'inreco_last_payment';
 const ORDER_REF = (() => {
   const d = new Date(), pad = n => String(n).padStart(2, '0');
   const rnd = Array.from(crypto.getRandomValues(new Uint8Array(3)), b => b.toString(36).padStart(2, '0')).join('').slice(0, 5).toUpperCase();
@@ -195,12 +192,12 @@ function payfastFields(k) {
   const f = {
     cmd: '_paynow',
     receiver: live ? PAYFAST.receiver : PAYFAST.sandboxReceiver,
-    return_url: `${base}#paid`,
-    cancel_url: `${base}#cancelled`,
+    return_url: `${base}?ref=${ORDER_REF}#paid`,
+    cancel_url: `${base}?ref=${ORDER_REF}#cancelled`,
     notify_url: PAYFAST.notifyUrl,
     name_first: ($('#f_contact').value || '').trim().split(/\s+/)[0].slice(0, 100),
     email_address: $('#f_email').checkValidity() ? ($('#f_email').value || '').trim() : '',
-    m_payment_id: ORDER_REF,
+    m_payment_id: `${ORDER_REF}.${p.code}${t.n}`,   // ref + package code + stores: the payment server checks the price
     amount: payTotal(k).toFixed(2),
     item_name: p.payName,
     item_description: desc
@@ -210,9 +207,9 @@ function payfastFields(k) {
 }
 window.payfastFields = payfastFields;
 
-function goToPayfast(k) {
+function goToPayfast(k, ans) {
   const { action, fields } = payfastFields(k);
-  try { localStorage.setItem('inreco_last_payment', JSON.stringify({ ref: ORDER_REF, pkg: PACKAGES[k].name, amount: fields.amount, at: Date.now() })); } catch (_) {}
+  try { localStorage.setItem(STORE_KEY, JSON.stringify({ ref: ORDER_REF, pkg: PACKAGES[k].name, amount: fields.amount, at: Date.now(), ...ans })); } catch (_) {}
   const f = document.createElement('form');
   f.method = 'post'; f.action = action; f.target = '_blank'; f.rel = 'noopener'; f.style.display = 'none';
   Object.entries(fields).forEach(([name, value]) => {
@@ -221,35 +218,53 @@ function goToPayfast(k) {
   document.body.appendChild(f); f.submit(); f.remove();
 }
 
+function showErrors(errs) {
+  const box = $('#errors');
+  box.hidden = false; box.innerHTML = '<b>Please add:</b> ' + errs.join(', ') + '.';
+  const first = $('.invalid'); (first || box).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Answers saved with the order, so the unlocked WhatsApp / email buttons carry them.
+// Nothing filled in yet: the question list is sent instead (the "Prefer WhatsApp or email?" route).
+function answersForPay(k) {
+  const touched = ['#f_bizname', '#f_contact', '#f_wa', '#f_sector'].some(s => $(s) && $(s).value.trim());
+  if (!touched) return { text: templateMessage(k), filled: false };
+  const errs = validate();
+  if (errs.length) { showErrors(errs); return null; }
+  $('#errors').hidden = true;
+  return { text: compile(k), filled: true, biz: $('#f_bizname').value.trim() };
+}
+
 $('#payList').addEventListener('click', e => {
   const a = e.target.closest('[data-pay]');
   if (!a) return;
   e.preventDefault();
   const k = a.dataset.pay;
-  if (isSet(PAYFAST_LINKS[k]) && !(k === current && isGroup())) { window.open(PAYFAST_LINKS[k], '_blank', 'noopener'); return; }
-  if (PAYFAST.enabled && PAYFAST.receiver) { goToPayfast(k); return; }
+  if (PAYFAST.enabled && PAYFAST.receiver) {
+    const ans = answersForPay(k);
+    if (!ans) return;
+    goToPayfast(k, ans);
+    waitForPayment(lockOpts, ORDER_REF);
+    return;
+  }
   alert('Online payment link is coming soon. Please WhatsApp us on ' + CONTACT.whatsappDisplay + ' and we will send you a payment link, eWallet or CashSend details.');
 });
 
-/* ---------- Return from PayFast (#paid / #cancelled) ---------- */
-function showPayReturn() {
-  const box = $('#payReturn'); if (!box) return;
-  const h = location.hash;
-  if (h !== '#paid' && h !== '#cancelled') { box.hidden = true; return; }
-  let last = null; try { last = JSON.parse(localStorage.getItem('inreco_last_payment') || 'null'); } catch (_) {}
-  const ref = last ? last.ref : '';
-  const paid = h === '#paid';
-  $('#payReturnTitle').textContent = paid ? '✅ Thank you for your payment' : 'Payment cancelled';
-  $('#payReturnText').textContent = paid
-    ? `PayFast will email you a receipt.${ref ? ` Your reference is ${ref}.` : ''} Now send us your answers and documents by WhatsApp or email, if you have not done so yet.`
-    : 'No money was taken. You can try again below, or WhatsApp us for eWallet or CashSend details.';
-  $('#payReturnWa').href = waLink(paid
-    ? `Hi iNRECO, I have paid${last ? ` R${Math.round(+last.amount).toLocaleString('en-ZA').replace(/\u00a0|\s/g, ',')} for the ${last.pkg}` : ''} on PayFast.${ref ? ` Reference: ${ref}.` : ''}`
-    : 'Hi iNRECO, I could not pay on PayFast. Please send me eWallet or CashSend details.');
-  box.hidden = false;
-  box.scrollIntoView({ block: 'start' });
-}
-window.addEventListener('hashchange', showPayReturn);
+/* ---------- Return from PayFast (#paid / #cancelled): locked until the payment server confirms ---------- */
+const lockOpts = {
+  box: $('#payReturn'), titleEl: $('#payReturnTitle'), textEl: $('#payReturnText'), actionsEl: $('#payReturnActions'),
+  storageKey: STORE_KEY,
+  messages: (order, st, ref) => {
+    const paidLine = `PAID on PayFast: ${rand(+st.amount)} for the ${st.item}. Ref ${ref}.`;
+    const text = order && order.text ? order.text : templateMessage('basic').replace(/^.*\n/, `Hi iNRECO, Ref ${ref}.\n`);
+    return {
+      wa: `${paidLine}\n\n${text}${order && order.filled ? '\n\nI will attach my documents in this chat.' : ''}`,
+      mailSubject: `Order: ${st.item} (paid) – ${(order && order.biz) || ref}`,
+      mailBody: `${paidLine}\n\n${text}\n\nMy documents are attached.`
+    };
+  }
+};
+window.addEventListener('hashchange', () => payReturnLock(lockOpts));
 
 /* ---------- WhatsApp / email links ---------- */
 function waLink(text) { return `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`; }
@@ -271,16 +286,19 @@ function templateMessage(pkg) {
   return out.join('\n');
 }
 function buildContactCards() {
-  $('#contactGrid').innerHTML = Object.entries(PACKAGES).map(([k, p]) => {
-    const msg = templateMessage(k);
-    return `<div class="contact-card">
+  // Before payment there are no WhatsApp / email send links: each card picks the package and goes to Pay.
+  $('#contactGrid').innerHTML = Object.entries(PACKAGES).map(([k, p]) => `<div class="contact-card">
       <h3>${p.name}<span>${rand(p.price)}</span></h3>
       <div class="btns">
-        <a class="btn btn-wa" data-wa="${k}" href="${waLink(msg)}" target="_blank" rel="noopener">WhatsApp the questions</a>
-        <a class="btn btn-mail" data-mail="${k}" href="${mailLink('Order: ' + p.name + ' (' + rand(p.price) + ')', msg)}">Email the questions</a>
-      </div></div>`;
-  }).join('');
+        <button type="button" class="btn btn-primary" data-choose="${k}">Choose and pay</button>
+      </div></div>`).join('');
 }
+$('#contactGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-choose]');
+  if (!b) return;
+  selectPackage(b.dataset.choose, false);
+  $('#summary').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 
 /* ---------- Submit: compile summary ---------- */
 function labelFor(el) {
@@ -296,8 +314,8 @@ function labelFor(el) {
 }
 function visible(el) { return !el.closest('[hidden]'); }
 
-function compile() {
-  const p = PACKAGES[current], t = totals();
+function compile(k = current) {
+  const p = PACKAGES[k], t = k === current ? totals() : { n: 1, total: p.price };
   const lines = [`iNRECO ORDER: ${p.name}`, `Reference: ${ORDER_REF}`, `Price: ${rand(t.total)}${t.n > 1 ? ` (${t.n} stores, ${GROUP_DISCOUNT.percent}% group discount)` : ''}`, ''];
   const files = [];
   const seen = new Set();
@@ -339,28 +357,12 @@ function validate() {
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const errs = validate(), box = $('#errors');
-  if (errs.length) {
-    box.hidden = false; box.innerHTML = '<b>Please add:</b> ' + errs.join(', ') + '.';
-    const first = $('.invalid'); (first || box).scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-  box.hidden = true;
+  const errs = validate();
+  if (errs.length) { showErrors(errs); return; }
+  $('#errors').hidden = true;
   const text = compile();
-  const data = Object.fromEntries(new FormData(form).entries()); // eslint-disable-line no-unused-vars
-
-  // TODO(Lovable backend): replace the WhatsApp/email hand-off with a real submit, e.g.
-  //   await supabase.from('inspection_orders').insert({ package: current, total: totals().total, answers: data, summary: text });
-  //   upload each input[type=file] to Supabase Storage, then call goToPayfast(current)
-  //   (with a server, switch to a signed PayFast form + notify_url for the ITN callback).
   window.dispatchEvent(new CustomEvent('inspection:submit', { detail: { package: current, totals: totals(), summary: text } }));
-
-  let waText = text;
-  $('#truncNote').hidden = true;
-  if (waText.length > WA_MAX_CHARS) { waText = waText.slice(0, WA_MAX_CHARS) + '\n…(full answers sent by email)'; $('#truncNote').hidden = false; }
   $('#resultText').textContent = text;
-  $('#sendWa').href = waLink(waText + '\n\nI will attach my documents in this chat.');
-  $('#sendMail').href = mailLink(`Order: ${PACKAGES[current].name} – ${$('#f_bizname').value.trim()}`, text + '\n\nMy documents are attached.');
   $('#result').hidden = false;
   $('#result').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
@@ -370,4 +372,4 @@ $('#yr').textContent = new Date().getFullYear();
 updateSector();
 selectPackage('basic', false);
 buildContactCards();
-showPayReturn();
+payReturnLock(lockOpts);

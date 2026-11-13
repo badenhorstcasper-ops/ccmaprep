@@ -1,6 +1,6 @@
 /* CCMA Help on Demand for Employers – /employer/ */
-const { CONTACT, WA_MAX_CHARS, $, $$, rand, makeOrderRef, waLink, mailLink,
-        payfastPayload, goToPayfast, showPayReturn, compileForm } = window.INRECO;
+const { CONTACT, WA_MAX_CHARS, LOCK, $, $$, rand, makeOrderRef, waLink, mailLink,
+        payfastPayload, goToPayfast, payReturnLock, waitForPayment, compileForm } = window.INRECO;
 
 const PAYFAST = {
   enabled: true,
@@ -8,13 +8,13 @@ const PAYFAST = {
   receiver: '12090292',
   sandboxReceiver: '10000100',
   siteUrl: 'https://ccmaprep.inreco.co.za/employer',
-  notifyUrl: ''
+  notifyUrl: LOCK.notifyUrl        // payment server (Cloudflare Worker) that confirms each payment
 };
 
 const PACKAGES = {
-  check:      { name: 'Case Check', price: 1500, payName: 'iNRECO Case Check' },
-  strategy:   { name: 'Assessment Report & Strategy', price: 3500, payName: 'iNRECO Assessment Report & Strategy' },
-  full:       { name: 'Full CCMA Pack', price: 6500, payName: 'iNRECO Full CCMA Pack' }
+  check:      { name: 'Case Check', price: 1500, payName: 'iNRECO Case Check', code: 'c' },
+  strategy:   { name: 'Assessment Report & Strategy', price: 3500, payName: 'iNRECO Assessment Report & Strategy', code: 's' },
+  full:       { name: 'Full CCMA Pack', price: 6500, payName: 'iNRECO Full CCMA Pack', code: 'f' }
 };
 const URGENT_FEE = 1000;
 
@@ -98,7 +98,8 @@ function payfastFields(k) {
     amount: pkgTotal(k),
     itemName: itemName(k),
     itemDescription: desc,
-    mPaymentId: ORDER_REF,
+    mPaymentId: `${ORDER_REF}.${PACKAGES[k].code}${isUrgent() ? 'u' : ''}`,  // ref + package code: the payment server checks the price
+    ref: ORDER_REF,
     nameFirst: ($('#f_contact').value || '').trim(),
     email: emailIfValid()
   });
@@ -107,29 +108,65 @@ window.payfastFields = payfastFields;
 window.PAYFAST = PAYFAST;
 window.ORDER_REF = ORDER_REF;
 
+function showErrors(errs) {
+  const box = $('#errors');
+  box.hidden = false; box.innerHTML = '<b>Please add:</b> ' + errs.join(', ') + '.';
+  const first = $('.invalid'); (first || box).scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function compileAnswers(k) {
+  const p = PACKAGES[k];
+  const missing = DOCS.filter(([id]) => !form.elements[id].checked).map(d => d[1]);
+  return compileForm(form, [
+    `iNRECO ORDER: ${p.name}${isUrgent() ? ' + Urgent' : ''}`,
+    `Reference: ${ORDER_REF}`,
+    `Price: ${rand(pkgTotal(k))}`,
+    ''
+  ], { missingDocs: missing });
+}
+
+// Answers saved with the order, so the unlocked WhatsApp / email buttons carry them.
+// Nothing filled in yet: the question list is sent instead (the "Prefer WhatsApp or email?" route).
+function answersForPay(k) {
+  const touched = ['#f_bizname', '#f_contact', '#f_wa', '#f_casetype'].some(s => $(s) && $(s).value.trim());
+  if (!touched) return { text: templateMessage(k), filled: false };
+  const errs = validate();
+  if (errs.length) { showErrors(errs); return null; }
+  $('#errors').hidden = true;
+  return { text: compileAnswers(k), filled: true, biz: $('#f_bizname').value.trim() };
+}
+
+const lockOpts = {
+  box: $('#payReturn'), titleEl: $('#payReturnTitle'), textEl: $('#payReturnText'), actionsEl: $('#payReturnActions'),
+  storageKey: STORE_KEY,
+  messages: (order, st, ref) => {
+    const paidLine = `PAID on PayFast: ${rand(+st.amount)} for the ${st.item}. Ref ${ref}.`;
+    const text = order && order.text ? order.text : templateMessage('check').replace(/^.*\n/, `Hi iNRECO, Ref ${ref}.\n`);
+    return {
+      wa: `${paidLine}\n\n${text}${order && order.filled ? '\n\nI will attach my documents in this chat.' : ''}`,
+      mailSubject: `Order: ${st.item} (paid) – ${(order && order.biz) || ref}`,
+      mailBody: `${paidLine}\n\n${text}\n\nMy documents are attached.`
+    };
+  }
+};
+
 $('#payList').addEventListener('click', e => {
   const a = e.target.closest('[data-pay]');
   if (!a) return;
   e.preventDefault();
   const k = a.dataset.pay;
   if (PAYFAST.enabled && PAYFAST.receiver) {
+    const ans = answersForPay(k);
+    if (!ans) return;
     const payload = payfastFields(k);
-    goToPayfast(payload, { ref: ORDER_REF, pkg: itemName(k), amount: payload.fields.amount, at: Date.now() }, STORE_KEY);
+    goToPayfast(payload, { ref: ORDER_REF, pkg: itemName(k), amount: payload.fields.amount, at: Date.now(), ...ans }, STORE_KEY);
+    waitForPayment(lockOpts, ORDER_REF);
     return;
   }
   alert('Online payment link is coming soon. Please WhatsApp us on ' + CONTACT.whatsappDisplay + ' and we will send you a payment link, eWallet or CashSend details.');
 });
 
-function bindPayReturn() {
-  showPayReturn({
-    box: $('#payReturn'),
-    titleEl: $('#payReturnTitle'),
-    textEl: $('#payReturnText'),
-    waEl: $('#payReturnWa'),
-    storageKey: STORE_KEY
-  });
-}
-window.addEventListener('hashchange', bindPayReturn);
+window.addEventListener('hashchange', () => payReturnLock(lockOpts));
 
 function templateMessage(k) {
   const p = PACKAGES[k];
@@ -154,16 +191,17 @@ function templateMessage(k) {
 }
 
 function buildContactCards() {
-  $('#contactGrid').innerHTML = Object.entries(PACKAGES).map(([k, p]) => {
-    const msg = templateMessage(k);
-    return `<div class="contact-card">
+  // Before payment there are no WhatsApp / email send links: each card picks the package and goes to Pay.
+  $('#contactGrid').innerHTML = Object.entries(PACKAGES).map(([k, p]) => `<div class="contact-card">
       <h3>${p.name}<span>${rand(pkgTotal(k))}</span></h3>
       <div class="btns">
-        <a class="btn btn-wa" data-wa="${k}" href="${waLink(msg)}" target="_blank" rel="noopener">WhatsApp the questions</a>
-        <a class="btn btn-mail" data-mail="${k}" href="${mailLink('Order: ' + p.name + ' (' + rand(pkgTotal(k)) + ')', msg)}">Email the questions</a>
-      </div></div>`;
-  }).join('');
+        <button type="button" class="btn btn-primary" data-choose="${k}">Choose and pay</button>
+      </div></div>`).join('');
 }
+$('#contactGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-choose]');
+  if (b) selectPackage(b.dataset.choose, true);
+});
 
 function validate() {
   const errs = [];
@@ -181,27 +219,10 @@ function validate() {
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const errs = validate(), box = $('#errors');
-  if (errs.length) {
-    box.hidden = false; box.innerHTML = '<b>Please add:</b> ' + errs.join(', ') + '.';
-    const first = $('.invalid'); (first || box).scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-  box.hidden = true;
-  const p = PACKAGES[current];
-  const missing = DOCS.filter(([id]) => !form.elements[id].checked).map(d => d[1]);
-  const text = compileForm(form, [
-    `iNRECO ORDER: ${p.name}${isUrgent() ? ' + Urgent' : ''}`,
-    `Reference: ${ORDER_REF}`,
-    `Price: ${rand(pkgTotal(current))}`,
-    ''
-  ], { missingDocs: missing });
-  let waText = text;
-  $('#truncNote').hidden = true;
-  if (waText.length > WA_MAX_CHARS) { waText = waText.slice(0, WA_MAX_CHARS) + '\n…(full answers sent by email)'; $('#truncNote').hidden = false; }
-  $('#resultText').textContent = text;
-  $('#sendWa').href = waLink(waText + '\n\nI will attach my documents in this chat.');
-  $('#sendMail').href = mailLink(`Order: ${p.name} – ${$('#f_bizname').value.trim()}`, text + '\n\nMy documents are attached.');
+  const errs = validate();
+  if (errs.length) { showErrors(errs); return; }
+  $('#errors').hidden = true;
+  $('#resultText').textContent = compileAnswers(current);
   $('#result').hidden = false;
   $('#result').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
@@ -210,4 +231,4 @@ $('#yr').textContent = new Date().getFullYear();
 selectPackage('check', false);
 buildContactCards();
 $('#f_urgent').addEventListener('change', buildContactCards);
-bindPayReturn();
+payReturnLock(lockOpts);

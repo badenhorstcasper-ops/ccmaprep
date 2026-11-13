@@ -50,7 +50,7 @@
   <div class="wrap"><div class="card" style="border:2px solid #1f9d8b">
     <h2 id="payReturnTitle">Thank you</h2>
     <p id="payReturnText"></p>
-    <a class="btn btn-wa" id="payReturnWa" href="#" target="_blank" rel="noopener">WhatsApp us</a>
+    <div id="payReturnActions"></div>
   </div></div>
 </section>
 <form id="packForm" novalidate>
@@ -369,17 +369,13 @@
       </div>
 
       <div class="errors" id="errors" hidden></div>
-      <button type="submit" class="btn btn-teal btn-block" style="margin-top:14px" id="submitBtn">Check and send my answers</button>
+      <button type="submit" class="btn btn-teal btn-block" style="margin-top:14px" id="submitBtn">Check my answers</button>
 
       <div id="result" hidden style="margin-top:16px">
         <h3>✅ Your answers are ready</h3>
-        <p class="small">Send them to us by WhatsApp or email. Then attach your documents in the same chat or email.</p>
+        <p class="small">After payment you send them to us by WhatsApp or email. Then attach your documents in the same chat or email.</p>
         <pre id="resultText"></pre>
-        <div class="grid two" style="margin-top:10px">
-          <a class="btn btn-wa" id="sendWa" href="#" target="_blank" rel="noopener">Send my answers by WhatsApp</a>
-          <a class="btn btn-mail" id="sendMail" href="#">Send my answers by email</a>
-        </div>
-        <p class="small" id="truncNote" hidden>Your answers were long, so the WhatsApp message is shortened. The email has everything.</p>
+        <p class="small" style="margin-top:10px">🔒 Next: pay below. As soon as PayFast confirms your payment, the WhatsApp and email buttons open at the top of this page, with your answers already typed in.</p>
       </div>
 
       <h3 style="margin-top:22px">Pay now</h3>
@@ -398,11 +394,11 @@
     <h2>Prefer WhatsApp or email?</h2>
     <p><span class="nocalls">💬 WhatsApp messages only. No calls, please.</span></p>
     <ol class="steps">
-      <li>Tap the button for the package you want below.</li>
-      <li>WhatsApp or your email app opens with our questions already typed in.</li>
+      <li>Tap the button for the package you want below, and pay safely with PayFast.</li>
+      <li>As soon as your payment is confirmed, WhatsApp or your email app opens with our questions already typed in.</li>
       <li>Type your answer after each question.</li>
       <li>Attach your documents (photos or PDFs) in the same chat or email.</li>
-      <li>Press send. We reply with your payment link and next steps.</li>
+      <li>Press send. Prefer eWallet or CashSend? WhatsApp us for the details.</li>
     </ol>
     <div class="contact-grid" id="contactGrid"><!-- built by script --></div>
   </div>
@@ -429,6 +425,7 @@
   </div>
 </footer>
 
+<script src="checkout.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
