@@ -7,7 +7,7 @@ const PAYFAST = {
   mode: 'live',
   receiver: '12090292',
   sandboxReceiver: '10000100',
-  siteUrl: 'https://ccmaprep.inreco.co.za/employer/',
+  siteUrl: 'https://ccmaprep.inreco.co.za/employer',
   notifyUrl: ''
 };
 

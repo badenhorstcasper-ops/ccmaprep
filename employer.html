@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CCMA Help on Demand for Employers | iNRECO</title>
+<meta name="description" content="Got a CCMA case? We assess your documents, write a report and a recommended approach, and prepare a CCMA presentation pack. Fully remote. We do not represent you at the CCMA.">
+<meta name="theme-color" content="#0b2545">
+<meta property="og:title" content="CCMA Help on Demand for Employers | iNRECO">
+<meta property="og:description" content="Case Check R1,500 · Assessment Report &amp; Strategy R3,500 · Full CCMA Pack R6,500. We prepare you; we do not represent you at the CCMA.">
+<meta property="og:image" content="logo-employer.webp">
+<link rel="icon" href="logo-employer.webp">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-employer">
+
+<div class="topbar">WhatsApp <a href="https://wa.me/27844027029" target="_blank" rel="noopener">084 402 7029</a> (messages only, no calls) · <a href="mailto:info@inreco.co.za">info@inreco.co.za</a></div>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <img class="logo" src="logo-employer.webp" width="220" height="220" alt="iNRECO CARA logo">
+    <div>
+      <span class="pill">For employers · Fully remote</span>
+      <h1>Got a CCMA case?<br>Get prepared, fast.</h1>
+      <p class="sub">Send your documents and evidence by WhatsApp or email. We assess your case, draft a written report and suggest an approach.</p>
+      <p class="sub">Reports in 72 hours · Case check in 48 hours</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#packages">Choose a package</a>
+        <a class="btn btn-ghost" href="#start">Fill in your case</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="warn" role="note" style="margin-top:-14px">
+    <strong>We prepare you, we do not represent you at the CCMA.</strong>
+    iNRECO assesses your case from the documents you send, writes a report with a recommended approach, and (on the full pack) a CCMA presentation pack. We do not appear for you at the hearing.
+  </div>
+</div>
+
+<main>
+<section id="payReturn" hidden style="padding-top:16px">
+  <div class="wrap"><div class="card" style="border:2px solid #1f9d8b">
+    <h2 id="payReturnTitle">Thank you</h2>
+    <p id="payReturnText"></p>
+    <a class="btn btn-wa" id="payReturnWa" href="#" target="_blank" rel="noopener">WhatsApp us</a>
+  </div></div>
+</section>
+
+<section id="packages">
+  <div class="wrap">
+    <h2>Choose your package</h2>
+    <p class="lead">Tap the package you want. Then fill in the questions and pay. You can also add urgent help if your hearing is soon.</p>
+    <div class="pack-grid">
+      <button type="button" class="pack-card selected" data-pkg="check">
+        <h2><span class="chosen">Chosen</span> Case Check</h2>
+        <div class="price">R1,500</div>
+        <p>A written view on the merits — settle or fight. Ready in 48 hours.</p>
+      </button>
+      <button type="button" class="pack-card" data-pkg="strategy">
+        <h2><span class="chosen">Chosen</span> Assessment Report &amp; Strategy</h2>
+        <div class="price">R3,500</div>
+        <p>A full written report and a clear recommended approach. Ready in 72 hours.</p>
+      </button>
+      <button type="button" class="pack-card featured" data-pkg="full">
+        <h2><span class="chosen">Chosen</span> Full CCMA Pack <span class="tag">Complete</span></h2>
+        <div class="price">R6,500</div>
+        <p>Report + presentation pack: bundle index, witness questions, opening statement, closing points and a settlement range.</p>
+      </button>
+    </div>
+    <label class="urgent-bar" id="urgentBar">
+      <input type="checkbox" id="f_urgent" name="urgent" form="packForm" value="Yes" data-label="Urgent — hearing within 5 working days">
+      <span class="urgent-copy">Urgent — hearing within 5 working days</span>
+      <span class="amt">+ R1,000</span>
+    </label>
+    <ol class="flow">
+      <li><span class="num">1</span><span>Send your documents</span></li>
+      <li><span class="num">2</span><span>Pay</span></li>
+      <li><span class="num">3</span><span>We assess</span></li>
+      <li><span class="num">4</span><span>Get your report/pack</span></li>
+    </ol>
+  </div>
+</section>
+
+<form id="packForm" novalidate>
+<input type="hidden" name="package" id="packageInput" value="check">
+
+<section id="start">
+  <div class="wrap">
+    <div class="card">
+      <h2>Tell us about the case</h2>
+      <p class="lead">Fill in what you know. Fields marked <span class="req">*</span> are needed. You will attach your documents when you send your answers by WhatsApp or email.</p>
+
+      <fieldset>
+        <legend><span class="num">1</span>Your business</legend>
+        <div class="grid two">
+          <div class="field"><label for="f_bizname">Business name <span class="req">*</span></label><input id="f_bizname" name="business_name" type="text" required autocomplete="organization"></div>
+          <div class="field"><label for="f_contact">Contact person <span class="req">*</span></label><input id="f_contact" name="contact_person" type="text" required autocomplete="name"></div>
+          <div class="field"><label for="f_wa">WhatsApp number <span class="req">*</span></label><input id="f_wa" name="whatsapp" type="tel" required inputmode="tel" placeholder="e.g. 082 123 4567" autocomplete="tel"></div>
+          <div class="field"><label for="f_email">Email</label><input id="f_email" name="email" type="email" autocomplete="email" inputmode="email"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="num">2</span>About the case</legend>
+        <div class="grid two">
+          <div class="field">
+            <label for="f_casetype">Case type <span class="req">*</span></label>
+            <select id="f_casetype" name="case_type" required>
+              <option value="">Choose one…</option>
+              <option>Unfair dismissal</option>
+              <option>Unfair labour practice</option>
+              <option>Retrenchment</option>
+              <option>Unfair discrimination</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label for="f_caseno">CCMA case number <span class="hint">If you have one, e.g. GAJB1234-26</span></label><input id="f_caseno" name="ccma_case_no" type="text"></div>
+          <div class="field"><label for="f_conciliation">Date of conciliation</label><input id="f_conciliation" name="conciliation_date" type="date"></div>
+          <div class="field"><label for="f_arbitration">Date of arbitration / hearing</label><input id="f_arbitration" name="arbitration_date" type="date"></div>
+        </div>
+        <div class="field" style="margin-top:12px"><label for="f_what">What happened? <span class="hint">In your own words. Include dates, who was involved, and what the employee claims.</span></label><textarea id="f_what" name="what_happened"></textarea></div>
+      </fieldset>
+
+      <fieldset>
+        <legend><span class="num">3</span>Documents you already have</legend>
+        <p class="small" style="margin-top:-4px">Tick what you have and upload it if you can. Photos from your phone are fine. Then also attach these files to your WhatsApp or email when you send your answers.</p>
+        <div class="grid docs" id="docList"></div>
+        <p class="upload-note">📎 This page does not store your files. Please attach them in the same WhatsApp chat or email.</p>
+      </fieldset>
+    </div>
+  </div>
+</section>
+
+<section id="summary">
+  <div class="wrap">
+    <div class="card">
+      <h2>Your order</h2>
+      <div class="summary-row"><span>Package</span><b id="sumName">Case Check</b></div>
+      <div class="summary-row"><span>Price</span><b id="sumPrice">R1,500</b></div>
+      <div class="summary-row" id="sumUrgentRow" hidden><span>Urgent add-on</span><b id="sumUrgent"></b></div>
+      <div class="summary-row"><span>Total</span><span class="summary-total" id="sumTotal">R1,500</span></div>
+
+      <div class="consent" style="margin-top:14px">
+        <input type="checkbox" id="f_popia" name="popia_consent" value="Yes" required>
+        <label for="f_popia">I agree that iNRECO may use the information and documents I send only to assess my case and prepare my report or pack, and will keep them safe as required by POPIA. <span class="req">*</span></label>
+      </div>
+
+      <div class="errors" id="errors" hidden></div>
+      <button type="submit" class="btn btn-teal btn-block" style="margin-top:14px" id="submitBtn">Check and send my answers</button>
+
+      <div id="result" hidden style="margin-top:16px">
+        <h3>✅ Your answers are ready</h3>
+        <p class="small">Send them to us by WhatsApp or email. Then attach your documents in the same chat or email.</p>
+        <pre id="resultText"></pre>
+        <div class="grid two" style="margin-top:10px">
+          <a class="btn btn-wa" id="sendWa" href="#" target="_blank" rel="noopener">Send my answers by WhatsApp</a>
+          <a class="btn btn-mail" id="sendMail" href="#">Send my answers by email</a>
+        </div>
+        <p class="small" id="truncNote" hidden>Your answers were long, so the WhatsApp message is shortened. The email has everything.</p>
+      </div>
+
+      <h3 style="margin-top:22px">Pay now</h3>
+      <p class="small">Pay safely with PayFast: card, Instant EFT, or the payment apps PayFast supports. Prefer <b>eWallet or CashSend</b>? WhatsApp us and we will send you the details.</p>
+      <div class="paylist" id="payList"></div>
+      <p class="small" style="margin-top:10px">PayFast opens in a new tab. Your payment reference is added for you, so we can match it to your answers.</p>
+    </div>
+  </div>
+</section>
+</form>
+
+<section id="whatsapp">
+  <div class="wrap">
+    <h2>Prefer WhatsApp or email?</h2>
+    <p><span class="nocalls">💬 WhatsApp messages only. No calls, please.</span></p>
+    <ol class="steps">
+      <li>Tap the button for the package you want below.</li>
+      <li>WhatsApp or your email app opens with our questions already typed in.</li>
+      <li>Type your answer after each question.</li>
+      <li>Attach your documents (photos or PDFs) in the same chat or email.</li>
+      <li>Press send. Pay with the PayFast button above, or ask us for eWallet or CashSend.</li>
+    </ol>
+    <div class="contact-grid" id="contactGrid"></div>
+  </div>
+</section>
+</main>
+
+<div class="sticky" id="sticky">
+  <div><div class="lbl" id="stickyName">Case Check</div><div class="val" id="stickyPrice">R1,500</div></div>
+  <a class="btn btn-primary" href="#summary">Continue</a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="motto">Fair price. Proper job.</p>
+    <p><b>iNRECO · CCMA Help on Demand</b> · WhatsApp <a href="https://wa.me/27844027029" target="_blank" rel="noopener">084 402 7029</a> (messages only, no calls) · <a href="mailto:info@inreco.co.za">info@inreco.co.za</a></p>
+    <p>We prepare you and your documents. We do not represent you at the CCMA. Advice is based on the documents you provide. There is no guarantee of outcome.</p>
+    <p><b>POPIA:</b> We use your personal information and your employees' information only to assess your case and prepare your report or pack. We keep it confidential and safe. Ask us any time to see or delete your information.</p>
+    <p class="site-nav">
+      <a href="./">Inspection Readiness Pack</a>
+      <a href="worker">R250 worker case check</a>
+    </p>
+    <p class="small" style="color:#8fa6ba">© <span id="yr">2026</span> iNRECO</p>
+  </div>
+</footer>
+
+<script src="checkout.js"></script>
+<script src="employer.js"></script>
+</body>
+</html>

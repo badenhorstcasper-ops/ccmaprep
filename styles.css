@@ -1,7 +1,7 @@
 /* iNRECO Inspection Readiness Pack – mobile-first styles */
 [hidden]{display:none!important}
-@font-face{font-family:"IBM Plex Sans";src:url("fonts/IBMPlexSans-Variable.ttf") format("truetype");font-weight:100 900;font-display:swap}
-@font-face{font-family:"IBM Plex Serif";src:url("fonts/IBMPlexSerif-SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("IBMPlexSans-Variable.ttf") format("truetype");font-weight:100 900;font-display:swap}
+@font-face{font-family:"IBM Plex Serif";src:url("IBMPlexSerif-SemiBold.ttf") format("truetype");font-weight:600;font-display:swap}
 :root{
   --navy:#0b2545;--navy2:#12385f;--teal:#0c6e6d;--teal-d:#085554;--teal-l:#e8f6f3;
   --green:#2e9e5b;--orange:#c4621a;--orange-l:#fdeee3;--ink:#152233;--muted:#5a7380;
