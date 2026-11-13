@@ -3,45 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Inspection Readiness Pack | iNRECO Assess &amp; Prepare</title>
-<meta name="description" content="Be ready for a Department of Employment and Labour inspection. One neat, indexed file for R1,200 once-off. Help with compliance orders and CCMA referrals.">
+<title>CCMA Help on Demand for Employers | iNRECO</title>
+<meta name="description" content="Got a CCMA case? We assess your documents, write a report and a recommended approach, and prepare a CCMA presentation pack. Fully remote. We do not represent you at the CCMA.">
 <meta name="theme-color" content="#0b2545">
-<meta property="og:title" content="Inspection Readiness Pack – R1,200 once-off | iNRECO">
-<meta property="og:description" content="The inspector can walk in today. Be ready with one neat, indexed file.">
-<meta property="og:image" content="assets/logo.webp">
-<link rel="icon" href="assets/logo.webp">
-<link rel="stylesheet" href="assets/styles.css">
+<meta property="og:title" content="CCMA Help on Demand for Employers | iNRECO">
+<meta property="og:description" content="Case Check R1,500 · Assessment Report &amp; Strategy R3,500 · Full CCMA Pack R6,500. We prepare you; we do not represent you at the CCMA.">
+<meta property="og:image" content="../assets/logo-employer.webp">
+<link rel="icon" href="../assets/logo-employer.webp">
+<link rel="stylesheet" href="../assets/styles.css">
 </head>
-<body>
+<body class="page-employer">
 
 <div class="topbar">WhatsApp <a href="https://wa.me/27844027029" target="_blank" rel="noopener">084 402 7029</a> (messages only, no calls) · <a href="mailto:info@inreco.co.za">info@inreco.co.za</a></div>
 
-<!-- 1. HERO -->
 <header class="hero">
   <div class="wrap hero-inner">
-    <img class="logo" src="assets/logo.webp" width="220" height="220" alt="iNRECO Assess &amp; Prepare logo">
+    <img class="logo" src="../assets/logo-employer.webp" width="220" height="220" alt="iNRECO CARA logo">
     <div>
-      <span class="pill">For employers · 100% online</span>
-      <h1>The inspector can walk in today.</h1>
-      <p class="sub">Be ready with one neat, indexed file the inspector expects.</p>
-      <p class="sub"><strong>Inspection Readiness Pack: R1,200 once-off.</strong> You can use it again for future inspections.</p>
+      <span class="pill">For employers · Fully remote</span>
+      <h1>Got a CCMA case?<br>Get prepared, fast.</h1>
+      <p class="sub">Send your documents and evidence by WhatsApp or email. We assess your case, draft a written report and suggest an approach.</p>
+      <p class="sub">Reports in 72 hours · Case check in 48 hours</p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#start">Start my pack</a>
-        <a class="btn btn-ghost" href="#upgrades">Already got a notice?</a>
+        <a class="btn btn-primary" href="#packages">Choose a package</a>
+        <a class="btn btn-ghost" href="#start">Fill in your case</a>
       </div>
     </div>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="warn" role="note">
-    <strong>⚠ Why this matters now</strong>
-    <ul>
-      <li>Labour inspectors can arrive <b>unannounced</b>.</li>
-      <li>A <b>compliance order</b> can be issued on the <b>first visit</b>. There may be no warning and no second chance.</li>
-      <li>Under section 76A of the BCEA, an underpayment fine can be up to <b>twice the amount underpaid</b> or <b>twice the employee's monthly wage</b>, whichever is more, for a first offence. Repeat offences cost more.</li>
-    </ul>
-    <p class="src">Often it is a simple mistake, like 4 or 5 workers out of 20 on the wrong wage rate. A tidy file helps you find and fix that first.</p>
+  <div class="warn" role="note" style="margin-top:-14px">
+    <strong>We prepare you, we do not represent you at the CCMA.</strong>
+    iNRECO assesses your case from the documents you send, writes a report with a recommended approach, and (on the full pack) a CCMA presentation pack. We do not appear for you at the hearing.
   </div>
 </div>
 
@@ -53,35 +47,55 @@
     <a class="btn btn-wa" id="payReturnWa" href="#" target="_blank" rel="noopener">WhatsApp us</a>
   </div></div>
 </section>
-<form id="packForm" novalidate>
-<input type="hidden" name="package" id="packageInput" value="basic">
 
-<!-- 2. BASIC PACKAGE -->
+<section id="packages">
+  <div class="wrap">
+    <h2>Choose your package</h2>
+    <p class="lead">Tap the package you want. Then fill in the questions and pay. You can also add urgent help if your hearing is soon.</p>
+    <div class="pack-grid">
+      <button type="button" class="pack-card selected" data-pkg="check">
+        <h2><span class="chosen">Chosen</span> Case Check</h2>
+        <div class="price">R1,500</div>
+        <p>A written view on the merits — settle or fight. Ready in 48 hours.</p>
+      </button>
+      <button type="button" class="pack-card" data-pkg="strategy">
+        <h2><span class="chosen">Chosen</span> Assessment Report &amp; Strategy</h2>
+        <div class="price">R3,500</div>
+        <p>A full written report and a clear recommended approach. Ready in 72 hours.</p>
+      </button>
+      <button type="button" class="pack-card featured" data-pkg="full">
+        <h2><span class="chosen">Chosen</span> Full CCMA Pack <span class="tag">Complete</span></h2>
+        <div class="price">R6,500</div>
+        <p>Report + presentation pack: bundle index, witness questions, opening statement, closing points and a settlement range.</p>
+      </button>
+    </div>
+    <label class="urgent-bar" id="urgentBar">
+      <input type="checkbox" id="f_urgent" name="urgent" form="packForm" value="Yes" data-label="Urgent — hearing within 5 working days">
+      <span class="urgent-copy">Urgent — hearing within 5 working days</span>
+      <span class="amt">+ R1,000</span>
+    </label>
+    <ol class="flow">
+      <li><span class="num">1</span><span>Send your documents</span></li>
+      <li><span class="num">2</span><span>Pay</span></li>
+      <li><span class="num">3</span><span>We assess</span></li>
+      <li><span class="num">4</span><span>Get your report/pack</span></li>
+    </ol>
+  </div>
+</section>
+
+<form id="packForm" novalidate>
+<input type="hidden" name="package" id="packageInput" value="check">
+
 <section id="start">
   <div class="wrap">
-    <div class="pkg-head">
-      <div>
-        <span class="tag">Basic · selected</span>
-        <h2>Inspection Readiness Pack</h2>
-        <ul class="ticks">
-          <li>Answer simple questions about your business</li>
-          <li>We build one neat, indexed and numbered file</li>
-          <li>Everything the inspector usually asks for, in order</li>
-          <li>Re-usable for future inspections</li>
-        </ul>
-      </div>
-      <div class="price">R1,200<small>once-off</small></div>
-    </div>
-
-    <div class="card" style="margin-top:14px">
-      <p class="lead">Fill in what you know. If you are not sure, choose "Not sure". We will help you with the rest. Fields marked <span class="req">*</span> are needed.</p>
+    <div class="card">
+      <h2>Tell us about the case</h2>
+      <p class="lead">Fill in what you know. Fields marked <span class="req">*</span> are needed. You will attach your documents when you send your answers by WhatsApp or email.</p>
 
       <fieldset>
         <legend><span class="num">1</span>Your business</legend>
         <div class="grid two">
-          <div class="field"><label for="f_bizname">Business name (registered) <span class="req">*</span></label><input id="f_bizname" name="business_name" type="text" required autocomplete="organization"></div>
-          <div class="field"><label for="f_trading">Trading name</label><input id="f_trading" name="trading_name" type="text"></div>
-          <div class="field"><label for="f_regno">Company registration no. <span class="hint">e.g. 2015/123456/07. Sole owner? Write "sole proprietor".</span></label><input id="f_regno" name="registration_no" type="text"></div>
+          <div class="field"><label for="f_bizname">Business name <span class="req">*</span></label><input id="f_bizname" name="business_name" type="text" required autocomplete="organization"></div>
           <div class="field"><label for="f_contact">Contact person <span class="req">*</span></label><input id="f_contact" name="contact_person" type="text" required autocomplete="name"></div>
           <div class="field"><label for="f_wa">WhatsApp number <span class="req">*</span></label><input id="f_wa" name="whatsapp" type="tel" required inputmode="tel" placeholder="e.g. 082 123 4567" autocomplete="tel"></div>
           <div class="field"><label for="f_email">Email</label><input id="f_email" name="email" type="email" autocomplete="email" inputmode="email"></div>
@@ -89,283 +103,48 @@
       </fieldset>
 
       <fieldset>
-        <legend><span class="num">2</span>Your industry</legend>
-        <div class="grid">
+        <legend><span class="num">2</span>About the case</legend>
+        <div class="grid two">
           <div class="field">
-            <label for="f_sector">Industry / sector <span class="req">*</span></label>
-            <select id="f_sector" name="sector" required>
+            <label for="f_casetype">Case type <span class="req">*</span></label>
+            <select id="f_casetype" name="case_type" required>
               <option value="">Choose one…</option>
-              <option value="retail">Retail (shop)</option>
-              <option value="hospitality">Hospitality / restaurant</option>
-              <option value="franchise">Franchise retail</option>
-              <option value="construction">Construction</option>
-              <option value="manufacturing">Manufacturing</option>
-              <option value="farming">Farming / agriculture</option>
-              <option value="security">Security</option>
-              <option value="cleaning">Cleaning</option>
-              <option value="domestic">Domestic / household</option>
-              <option value="other">Other</option>
+              <option>Unfair dismissal</option>
+              <option>Unfair labour practice</option>
+              <option>Retrenchment</option>
+              <option>Unfair discrimination</option>
+              <option>Other</option>
             </select>
           </div>
-
-          <div class="cond" id="condCommon" hidden>
-            <div class="grid">
-              <div><span class="qlabel">Does a bargaining council agreement or sectoral determination apply to you?</span>
-                <div class="choices" role="radiogroup">
-                  <label class="choice"><input type="radio" name="bc_applies" value="Yes"><span>Yes</span></label>
-                  <label class="choice"><input type="radio" name="bc_applies" value="No"><span>No</span></label>
-                  <label class="choice"><input type="radio" name="bc_applies" value="Not sure"><span>Not sure</span></label>
-                </div>
-              </div>
-              <div class="field" id="bcWhichWrap" hidden><label for="f_bcwhich">Which one?</label><input id="f_bcwhich" name="bc_which" type="text" placeholder="e.g. MIBCO, BCCEI, Hospitality SD"></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="retail" hidden>
-            <div class="grid two">
-              <div><span class="qlabel">Do staff work Sundays or public holidays?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="retail_sunday" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="retail_sunday" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Any commission or incentive pay?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="retail_commission" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="retail_commission" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="hospitality" hidden>
-            <div class="grid two">
-              <div><span class="qlabel">Do staff work on Sundays?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="hosp_sunday" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="hosp_sunday" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do staff work at night (after 18:00)?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="hosp_night" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="hosp_night" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do you transport night staff home?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="hosp_transport" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="hosp_transport" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do staff get tips or a service charge?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="hosp_tips" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="hosp_tips" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="franchise" hidden>
-            <div class="grid two">
-              <div class="field"><label for="f_brand">Franchise brand</label><input id="f_brand" name="franchise_brand" type="text"></div>
-              <div><span class="qlabel">Are all stores in the same company name?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="franchise_same_entity" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="franchise_same_entity" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do staff work Sundays or public holidays?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="franchise_sunday" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="franchise_sunday" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="construction" hidden>
-            <div class="grid two">
-              <div class="field"><label for="f_cidb">CIDB grade (if any)</label><input id="f_cidb" name="cidb_grade" type="text"></div>
-              <div><span class="qlabel">Do you have a site health &amp; safety plan?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="constr_hs_plan" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="constr_hs_plan" value="No"><span>No</span></label><label class="choice"><input type="radio" name="constr_hs_plan" value="Not sure"><span>Not sure</span></label></div></div>
-              <div><span class="qlabel">Do you use sub-contractors or labour brokers?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="constr_subcon" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="constr_subcon" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do you employ fixed-term / per-project workers?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="constr_fixed" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="constr_fixed" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="manufacturing" hidden>
-            <div class="grid two">
-              <div><span class="qlabel">Do you run shifts or night shifts?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="manu_shifts" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="manu_shifts" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do you handle hazardous chemicals?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="manu_chemicals" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="manu_chemicals" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="farming" hidden>
-            <div class="grid two">
-              <div class="field"><label for="f_farmtype">Type of farming</label><input id="f_farmtype" name="farm_type" type="text" placeholder="e.g. fruit, livestock, grain"></div>
-              <div class="field"><label for="f_seasonal">How many seasonal workers in peak season?</label><input id="f_seasonal" name="farm_seasonal" type="number" min="0" inputmode="numeric"></div>
-              <div><span class="qlabel">Do workers live on the farm (housing)?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="farm_housing" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="farm_housing" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do you deduct for housing or food from wages?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="farm_deductions" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="farm_deductions" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do workers spray chemicals or drive tractors?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="farm_machinery" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="farm_machinery" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="security" hidden>
-            <div class="grid two">
-              <div class="field"><label for="f_psira">PSiRA business registration no.</label><input id="f_psira" name="psira_no" type="text"></div>
-              <div><span class="qlabel">Are all guards registered with PSiRA?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="psira_guards" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="psira_guards" value="No"><span>No</span></label><label class="choice"><input type="radio" name="psira_guards" value="Not sure"><span>Not sure</span></label></div></div>
-              <div><span class="qlabel">Are guards armed?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="sec_armed" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="sec_armed" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Do guards work 12-hour or night shifts?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="sec_shifts" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="sec_shifts" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="cleaning" hidden>
-            <div class="grid two">
-              <div class="field"><label for="f_clsites">At how many client sites do your cleaners work?</label><input id="f_clsites" name="cleaning_client_sites" type="number" min="0" inputmode="numeric"></div>
-              <div><span class="qlabel">Did you take over staff from a previous contractor?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="cleaning_takeover" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="cleaning_takeover" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="domestic" hidden>
-            <div class="grid two">
-              <div class="field"><label for="f_domhrs">Hours worked per week</label><input id="f_domhrs" name="domestic_hours" type="number" min="0" inputmode="numeric"></div>
-              <div><span class="qlabel">Does the worker live in?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="domestic_livein" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="domestic_livein" value="No"><span>No</span></label></div></div>
-              <div><span class="qlabel">Is there a written contract?</span>
-                <div class="choices"><label class="choice"><input type="radio" name="domestic_contract" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="domestic_contract" value="No"><span>No</span></label></div></div>
-            </div>
-          </div>
-
-          <div class="cond" data-sector="other" hidden>
-            <div class="field"><label for="f_otherdesc">What does your business do?</label><input id="f_otherdesc" name="other_description" type="text"></div>
-          </div>
-
-          <div class="grid two">
-            <div class="field"><label for="f_emps">Number of employees <span class="hint">All staff, including part-time</span></label><input id="f_emps" name="employees" type="number" min="1" inputmode="numeric"></div>
-            <div class="field"><label for="f_sites">Number of stores / sites</label><input id="f_sites" name="sites" type="number" min="1" value="1" inputmode="numeric"></div>
-          </div>
-          <p class="note" id="groupNote" hidden>🎉 <b>Group discount:</b> 3 or more stores or sites get <b>15% off each store's pack</b>. The Pay button below charges the group total.</p>
+          <div class="field"><label for="f_caseno">CCMA case number <span class="hint">If you have one, e.g. GAJB1234-26</span></label><input id="f_caseno" name="ccma_case_no" type="text"></div>
+          <div class="field"><label for="f_conciliation">Date of conciliation</label><input id="f_conciliation" name="conciliation_date" type="date"></div>
+          <div class="field"><label for="f_arbitration">Date of arbitration / hearing</label><input id="f_arbitration" name="arbitration_date" type="date"></div>
         </div>
+        <div class="field" style="margin-top:12px"><label for="f_what">What happened? <span class="hint">In your own words. Include dates, who was involved, and what the employee claims.</span></label><textarea id="f_what" name="what_happened"></textarea></div>
       </fieldset>
 
       <fieldset>
-        <legend><span class="num">3</span>Registrations</legend>
-        <p class="small" style="margin-top:-4px">Not registered yet or can't find the number? Write "No" or "Don't know". We will help.</p>
-        <div class="grid two">
-          <div class="field"><label for="f_uif">UIF reference no.</label><input id="f_uif" name="uif_ref" type="text"></div>
-          <div class="field"><label for="f_coida">COIDA / Compensation Fund registration no.</label><input id="f_coida" name="coida_ref" type="text"></div>
-          <div class="field"><label for="f_paye">SARS PAYE / SDL reference no.</label><input id="f_paye" name="paye_sdl_ref" type="text" placeholder="starts with 7…"></div>
-          <div><span class="qlabel">Are you a designated employer for Employment Equity?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="ee_designated" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="ee_designated" value="No"><span>No</span></label><label class="choice"><input type="radio" name="ee_designated" value="Not sure"><span>Not sure</span></label></div></div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend><span class="num">4</span>Health &amp; safety (OHS)</legend>
-        <div class="grid two">
-          <div><span class="qlabel">Do you have appointed health &amp; safety reps?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="ohs_reps" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="ohs_reps" value="No"><span>No</span></label><label class="choice"><input type="radio" name="ohs_reps" value="Not sure"><span>Not sure</span></label></div></div>
-          <div><span class="qlabel">Do you have trained first aiders?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="ohs_firstaid" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="ohs_firstaid" value="No"><span>No</span></label><label class="choice"><input type="radio" name="ohs_firstaid" value="Not sure"><span>Not sure</span></label></div></div>
-          <div><span class="qlabel">Do staff use machinery or equipment?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="ohs_machinery" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="ohs_machinery" value="No"><span>No</span></label></div></div>
-          <div class="field" id="machWrap" hidden><label for="f_mach">What machinery or equipment?</label><input id="f_mach" name="ohs_machinery_list" type="text" placeholder="e.g. forklift, slicer, grinder"></div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend><span class="num">5</span>Documents you already have</legend>
-        <p class="small" style="margin-top:-4px">Tick what you have and upload it if you can. Photos from your phone are fine. Missing something? Leave it unticked, and we will tell you what to add.</p>
-        <div class="grid docs" id="docList"><!-- built by script from DOCS --></div>
-        <p class="upload-note">📎 Uploads: <!-- TODO(Lovable): wire file inputs to storage (e.g. Supabase Storage bucket "inspection-uploads") -->for now, please also attach these files to your WhatsApp or email when you send your answers.</p>
+        <legend><span class="num">3</span>Documents you already have</legend>
+        <p class="small" style="margin-top:-4px">Tick what you have and upload it if you can. Photos from your phone are fine. Then also attach these files to your WhatsApp or email when you send your answers.</p>
+        <div class="grid docs" id="docList"></div>
+        <p class="upload-note">📎 This page does not store your files. Please attach them in the same WhatsApp chat or email.</p>
       </fieldset>
     </div>
   </div>
 </section>
 
-<!-- 3. UPGRADES -->
-<section id="upgrades">
-  <div class="wrap">
-    <h2>Already had an inspection, or got a notice?</h2>
-    <p class="lead">Upgrade to get help with the Department's notice and, if needed, the CCMA. Tap a package to read what it includes.</p>
-
-    <div class="upgrades">
-      <article class="up" data-pkg="response">
-        <button type="button" class="up-toggle" aria-expanded="false" aria-controls="body-response">
-          <div><span class="chosen-badge">Chosen</span><h3>Inspection Response</h3><div class="short">Includes the Readiness Pack</div></div>
-          <div><span class="up-price">R2,500</span><span class="chev" aria-hidden="true">▾</span></div>
-        </button>
-        <div class="up-body" id="body-response" hidden>
-          <ul class="ticks">
-            <li>Everything in the <b>Inspection Readiness Pack</b></li>
-            <li>Forward us the notice or compliance order from the Department</li>
-            <li>We check it against your file and your payroll</li>
-            <li>We work out the <b>real back pay</b> owed to workers</li>
-            <li>We draft your written response to the inspector</li>
-          </ul>
-          <button type="button" class="btn btn-primary btn-block choose-btn" data-pkg="response" style="margin-top:12px">Choose this package</button>
-        </div>
-      </article>
-
-      <article class="up" data-pkg="relief">
-        <button type="button" class="up-toggle" aria-expanded="false" aria-controls="body-relief">
-          <div><span class="chosen-badge">Chosen</span><h3>Full Relief Package</h3><div class="short">Everything, plus the CCMA</div></div>
-          <div><span class="up-price">R4,500</span><span class="chev" aria-hidden="true">▾</span></div>
-        </button>
-        <div class="up-body" id="body-relief" hidden>
-          <ul class="ticks">
-            <li>Everything in <b>Inspection Response</b> (and the Readiness Pack)</li>
-            <li>CCMA referral on <b>Form 7.11</b> under <b>section 69(5) of the BCEA</b>, served on the Department and the inspector</li>
-            <li>A short file on each contravention and the fine</li>
-            <li>A request for relief: pay in instalments, or show it was an oversight, not wilful</li>
-            <li>Full CCMA preparation for you: what happens on the day, conciliation and settlement, "without prejudice" talks, arbitration, being sworn in as a witness, and which evidence to bring</li>
-          </ul>
-          <p class="small">We prepare you and your documents. We do not appear for you at the CCMA.</p>
-          <button type="button" class="btn btn-primary btn-block choose-btn" data-pkg="relief" style="margin-top:12px">Choose this package</button>
-        </div>
-      </article>
-    </div>
-    <p class="basic-switch" id="basicSwitch" hidden>Only need the basic pack? <button type="button" id="backToBasic">Go back to the R1,200 pack</button></p>
-
-    <!-- Extra fields for upgrades -->
-    <div class="extra" id="extraResponse" hidden>
-      <h3>About your inspection and notice</h3>
-      <div class="deadline" role="alert">
-        <span class="big">⏰ Watch the deadline in your order</span>
-        To challenge a compliance order you must refer it within the deadline written in the order. If you miss it, you must comply. <b>Send it to us the same day you get it.</b>
-        <span id="daysLeft" hidden></span>
-      </div>
-      <div class="grid two" style="margin-top:14px">
-        <div class="field"><label for="f_insdate">Date of inspection</label><input id="f_insdate" name="inspection_date" type="date"></div>
-        <div class="field"><label for="f_inspector">Inspector's name and labour office</label><input id="f_inspector" name="inspector_office" type="text"></div>
-        <div class="field"><label for="f_notice">What did you receive?</label>
-          <select id="f_notice" name="notice_type">
-            <option value="">Choose one…</option>
-            <option>Compliance order</option>
-            <option>Contravention notice</option>
-            <option>Undertaking</option>
-            <option>Not sure</option>
-          </select></div>
-        <div class="field"><label for="f_recv">Date you received it</label><input id="f_recv" name="notice_received" type="date"></div>
-        <div class="field"><label for="f_deadline">Deadline written in the order</label><input id="f_deadline" name="notice_deadline" type="date"></div>
-        <div class="field"><label for="f_affected">Number of employees affected</label><input id="f_affected" name="employees_affected" type="number" min="0" inputmode="numeric"></div>
-        <div class="field"><label for="f_fines">Amount claimed as fines (R)</label><input id="f_fines" name="amount_fines" type="text" inputmode="decimal" placeholder="e.g. 85 000"></div>
-        <div class="field"><label for="f_backpay">Amount claimed as back pay to workers (R)</label><input id="f_backpay" name="amount_backpay" type="text" inputmode="decimal" placeholder="e.g. 18 500"></div>
-      </div>
-      <div class="field" style="margin-top:12px"><label for="f_noticefiles">Upload the notice / order and any emails from the Department</label><input id="f_noticefiles" name="notice_files" type="file" multiple accept="image/*,.pdf,.doc,.docx,.eml,.msg"></div>
-      <div class="field" style="margin-top:12px"><label for="f_what">In a few words, what happened? <span class="hint">Was it a mistake or oversight? e.g. "4 of 20 staff were on last year's rate."</span></label><textarea id="f_what" name="what_happened"></textarea></div>
-
-      <div id="extraRelief" hidden>
-        <h3 style="margin-top:18px">For the Full Relief Package</h3>
-        <div class="grid two">
-          <div><span class="qlabel">Have you paid anything yet?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="paid_status" value="Not paid"><span>Not paid</span></label><label class="choice"><input type="radio" name="paid_status" value="Partly paid"><span>Partly paid</span></label><label class="choice"><input type="radio" name="paid_status" value="Fully paid"><span>Fully paid</span></label></div></div>
-          <div><span class="qlabel">Can you pay the workers' back pay now?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="backpay_now" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="backpay_now" value="No"><span>No</span></label><label class="choice"><input type="radio" name="backpay_now" value="Some of it"><span>Some of it</span></label></div></div>
-          <div><span class="qlabel">Would you prefer to pay in instalments?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="instalments" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="instalments" value="No"><span>No</span></label></div></div>
-          <div><span class="qlabel">Is this your first time at the CCMA?</span>
-            <div class="choices"><label class="choice"><input type="radio" name="first_ccma" value="Yes"><span>Yes</span></label><label class="choice"><input type="radio" name="first_ccma" value="No"><span>No</span></label></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4. ORDER SUMMARY -->
 <section id="summary">
   <div class="wrap">
     <div class="card">
       <h2>Your order</h2>
-      <div class="summary-row"><span>Package</span><b id="sumName">Inspection Readiness Pack</b></div>
-      <div class="summary-row"><span>Price</span><b id="sumPrice">R1,200</b></div>
-      <div class="summary-row" id="sumGroupRow" hidden><span>Group discount</span><b id="sumGroup"></b></div>
-      <div class="summary-row"><span>Total</span><span class="summary-total" id="sumTotal">R1,200</span></div>
+      <div class="summary-row"><span>Package</span><b id="sumName">Case Check</b></div>
+      <div class="summary-row"><span>Price</span><b id="sumPrice">R1,500</b></div>
+      <div class="summary-row" id="sumUrgentRow" hidden><span>Urgent add-on</span><b id="sumUrgent"></b></div>
+      <div class="summary-row"><span>Total</span><span class="summary-total" id="sumTotal">R1,500</span></div>
 
       <div class="consent" style="margin-top:14px">
-        <input type="checkbox" id="f_popia" name="popia_consent" value="Yes" required form="packForm">
-        <label for="f_popia">I agree that iNRECO may use the information and documents I send only to prepare my inspection file and case, and will keep them safe as required by POPIA. <span class="req">*</span></label>
+        <input type="checkbox" id="f_popia" name="popia_consent" value="Yes" required>
+        <label for="f_popia">I agree that iNRECO may use the information and documents I send only to assess my case and prepare my report or pack, and will keep them safe as required by POPIA. <span class="req">*</span></label>
       </div>
 
       <div class="errors" id="errors" hidden></div>
@@ -384,15 +163,13 @@
 
       <h3 style="margin-top:22px">Pay now</h3>
       <p class="small">Pay safely with PayFast: card, Instant EFT, or the payment apps PayFast supports. Prefer <b>eWallet or CashSend</b>? WhatsApp us and we will send you the details.</p>
-      <div class="paylist" id="payList"><!-- built by script --></div>
-      <p class="small" id="groupPayNote" hidden style="margin-top:10px">The Pay button charges your group total. We check the number of stores before we start.</p>
+      <div class="paylist" id="payList"></div>
       <p class="small" style="margin-top:10px">PayFast opens in a new tab. Your payment reference is added for you, so we can match it to your answers.</p>
     </div>
   </div>
 </section>
 </form>
 
-<!-- 5. WHATSAPP / EMAIL -->
 <section id="whatsapp">
   <div class="wrap">
     <h2>Prefer WhatsApp or email?</h2>
@@ -402,29 +179,33 @@
       <li>WhatsApp or your email app opens with our questions already typed in.</li>
       <li>Type your answer after each question.</li>
       <li>Attach your documents (photos or PDFs) in the same chat or email.</li>
-      <li>Press send. We reply with your payment link and next steps.</li>
+      <li>Press send. Pay with the PayFast button above, or ask us for eWallet or CashSend.</li>
     </ol>
-    <div class="contact-grid" id="contactGrid"><!-- built by script --></div>
+    <div class="contact-grid" id="contactGrid"></div>
   </div>
 </section>
 </main>
 
 <div class="sticky" id="sticky">
-  <div><div class="lbl" id="stickyName">Inspection Readiness Pack</div><div class="val" id="stickyPrice">R1,200</div></div>
+  <div><div class="lbl" id="stickyName">Case Check</div><div class="val" id="stickyPrice">R1,500</div></div>
   <a class="btn btn-primary" href="#summary">Continue</a>
 </div>
 
-<!-- 7. FOOTER -->
 <footer>
   <div class="wrap">
     <p class="motto">Fair price. Proper job.</p>
-    <p><b>iNRECO Assess &amp; Prepare</b> · WhatsApp <a href="https://wa.me/27844027029" target="_blank" rel="noopener">084 402 7029</a> (messages only, no calls) · <a href="mailto:info@inreco.co.za">info@inreco.co.za</a></p>
-    <p>We prepare your documents and case; outcomes depend on the Department/CCMA. We do not represent you at the CCMA. Advice is based on the information and documents you give us.</p>
-    <p><b>POPIA:</b> We use your personal information and your employees' information only to prepare your file and case. We keep it confidential and safe, and do not share it with anyone except the Department or CCMA when you ask us to. Ask us any time to see or delete your information.</p>
+    <p><b>iNRECO · CCMA Help on Demand</b> · WhatsApp <a href="https://wa.me/27844027029" target="_blank" rel="noopener">084 402 7029</a> (messages only, no calls) · <a href="mailto:info@inreco.co.za">info@inreco.co.za</a></p>
+    <p>We prepare you and your documents. We do not represent you at the CCMA. Advice is based on the documents you provide. There is no guarantee of outcome.</p>
+    <p><b>POPIA:</b> We use your personal information and your employees' information only to assess your case and prepare your report or pack. We keep it confidential and safe. Ask us any time to see or delete your information.</p>
+    <p class="site-nav">
+      <a href="../">Inspection Readiness Pack</a>
+      <a href="../worker/">R250 worker case check</a>
+    </p>
     <p class="small" style="color:#8fa6ba">© <span id="yr">2026</span> iNRECO</p>
   </div>
 </footer>
 
-<script src="assets/app.js"></script>
+<script src="../assets/checkout.js"></script>
+<script src="../assets/employer.js"></script>
 </body>
 </html>
